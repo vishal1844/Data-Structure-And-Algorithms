@@ -3,27 +3,31 @@ using namespace std;
 struct node{
     int data;
     node *next;
-    node*prev;
+    node *prev;
 };
-void insert(node*head){
+node* insert(node*head)
+{
     int key;
     cout<<"enter the insertion key ";
     cin>>key;
     node*ptr=new node();
-    int t;
-    cout<<"enter the position to insert the key ";
-    cin>>t;
-    int count=1;
-    while(count<t-1){
-        head=head->next;
-        count++;
+    if(head==NULL){
+        ptr->data=key;
+        head=ptr;
+        head->next=NULL;
+        head->prev=NULL;
     }
-    node*temp=head->next;
-    ptr->data=key; 
-    head->next=ptr;
-    ptr->prev=head;
-    ptr->next=temp;
-    temp->prev=ptr;
+    else{
+    ptr->data=key;
+    ptr->prev=NULL;
+    node*temp=head;
+    head=ptr;
+    head->next=temp;
+    temp->prev=head;
+   // head->prev=NULL;
+    //head=ptr;
+    }
+    return head;
 }
 void print(node *head){
     node*temp=head;
@@ -31,8 +35,8 @@ void print(node *head){
         cout<<head->data<<" ";
         head=head->next;
     }
-    cout<<endl<<"the reverse insertion key is "<<endl;
     head=temp;
+    cout<<endl<<"the reverse linkedlist is "<<endl;
     while(head->next!=NULL){
         head=head->next;
     }
@@ -45,9 +49,9 @@ int main(){
     int t;
     cout<<"enter the number ";
     cin>>t;
-    int key;
     node*head=NULL;
-    node*tail=NULL;
+    node *tail=NULL;
+    int key;
     while(t--){
         cout<<"enter the key ";
         cin>>key;
@@ -65,7 +69,7 @@ int main(){
             tail=ptr;
         }
     }
-    insert(head);
+    head=insert(head);
     print(head);
     return 0;
 }
